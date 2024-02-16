@@ -1,66 +1,35 @@
-// Задача 2. Користувачі з другом
-// Стрілочна функція getUsersWithFriend(users, friendName) приймає два параметра:
-// перший параметр users — масив об'єктів користувачів
-// другий параметр friendName — ім'я друга для пошуку.
-// до параметру users застосовуємо метод filter, який перебирає усіх user масиву users
-// і якщо user має властивість friends зі значенням параметру frienName, то ім'я user додається до нового масиву
+// *Задача 2. Склад
+// Створи клас Storage, який створюватиме об'єкти для управління складом товарів. 
+// Клас очікує лише один аргумент — початковий масив товарів, який записується до створеного об'єкта в приватну властивість items.
 
-const getUsersWithFriend = (users, friendName) => users.filter(user => user.friends.includes(friendName))
+// Оголоси наступні методи класу:
 
+// getItems() — повертає масив поточних товарів у приватній властивості items.
+// addItem(newItem) — приймає новий товар newItem і додає його до масиву товарів у приватну властивість items об'єкта.
+// removeItem(itemToRemove) — приймає рядок з назвою товару itemToRemove і видаляє його з масиву товарів у приватній властивості items об'єкта.
 
-const allUsers = [
-  {
-    name: "Moore Hensley",
-    friends: ["Sharron Pace"]
-  },
-  {
-    name: "Sharlene Bush",
-    friends: ["Briana Decker", "Sharron Pace"]
-  },
-  {
-    name: "Ross Vazquez",
-    friends: ["Marilyn Mcintosh", "Padilla Garrison", "Naomi Buckner"]
-  },
-  {
-    name: "Elma Head",
-    friends: ["Goldie Gentry", "Aisha Tran"]
-  },
-  {
-    name: "Carey Barr",
-    friends: ["Jordan Sampson", "Eddie Strong"]
-  },
-  {
-    name: "Blackburn Dotson",
-    friends: ["Jacklyn Lucas", "Linda Chapman"]
-  },
-  {
-    name: "Sheree Anthony",
-    friends: ["Goldie Gentry", "Briana Decker"]
-  }
-];
+class Storage {
+    #items;
+    constructor (items) {
+    this.#items = items;
+    }
+    getItems() {
+    return this.#items;
+    }
+    addItem(newItem) {
+        this.#items.push(newItem);
+    }
+    removeItem(itemToRemove) {
+       const deleteItem = this.#items.indexOf(itemToRemove);
+       if (deleteItem !== -1) {
+        this.#items.splice(deleteItem, 1)
+       }     
+    }
+}
 
-console.log(getUsersWithFriend(allUsers, "Briana Decker")); 
-// [
-//   {
-//     name: "Sharlene Bush",
-//     friends: ["Briana Decker", "Sharron Pace"]
-//   },
-//   {
-//     name: "Sheree Anthony",
-//     friends: ["Goldie Gentry", "Briana Decker"]
-//   }
-// ]
-
-console.log(getUsersWithFriend(allUsers, "Goldie Gentry"));
-// [
-//   {
-//     name: "Elma Head",
-//     friends: ["Goldie Gentry", "Aisha Tran"]
-//   },
-//   {
-//     name: "Sheree Anthony",
-//     friends: ["Goldie Gentry", "Briana Decker"]
-//   }
-// ]
-
-console.log(getUsersWithFriend(allUsers, "Adrian Cross" )); // []
+const storage = new Storage(["Nanitoids", "Prolonger", "Antigravitator"]);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
+storage.addItem("Droid");
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+storage.removeItem("Prolonger");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
